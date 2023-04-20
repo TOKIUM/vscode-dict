@@ -1,0 +1,5 @@
+- name: name
+  aliases:
+    - alias1
+    - alias2
+  description: description

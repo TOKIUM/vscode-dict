@@ -1,25 +1,16 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { CommentHoverProvider } from './vscode/CommentHoverProvider';
+import { DictionaryLoader } from './core/DictionaryLoader';
+import { WindowNotifier } from './vscode/WindowNotifier';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	const windowNotifier = new WindowNotifier();
+	const dictionaryLoader = new DictionaryLoader(windowNotifier);
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-dict" is now active!');
+	const rubyDocumentSelector: vscode.DocumentSelector = { language: 'ruby', scheme: 'file' };
+	const rubyHoverProvider: vscode.HoverProvider = CommentHoverProvider.forRuby(dictionaryLoader);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('vscode-dict.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from vscode-dict!');
-	});
-
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(vscode.languages.registerHoverProvider(rubyDocumentSelector, rubyHoverProvider));
 }
 
 // This method is called when your extension is deactivated
