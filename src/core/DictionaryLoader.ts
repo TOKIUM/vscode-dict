@@ -4,9 +4,9 @@ import { Dictionaries, Dictionary } from './Dictionary';
 import { Notifier } from './Notifier';
 
 interface DictionaryEntry {
-  name: string;
-  aliases: string[];
-  description: string;
+  name: string | undefined;
+  aliases: string[] | undefined;
+  description: string | undefined;
 }
 
 export class DictionaryLoader {
@@ -23,7 +23,10 @@ export class DictionaryLoader {
     try {
       const text = fs.readFileSync(path, 'utf8');
       const loaded = yaml.load(text) as DictionaryEntry[];
-      const dictionaries = loaded.map((entry) => new Dictionary(entry.name, entry.aliases, entry.description));
+      const dictionaries = loaded.flatMap((entry) => {
+        if (entry.name === undefined) { return []; };
+        return new Dictionary(entry.name, entry.aliases ?? [], entry.description ?? '');
+      });
       return dictionaries;
     } catch (e) {
       this.notifier.error(`Failed to load dictionary yaml file`);

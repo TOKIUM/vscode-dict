@@ -19,8 +19,7 @@ export class CommentHoverProvider implements vscode.HoverProvider {
 		// target only comment line
 		if (!this.commentMarkers.some((marker) => lineText.startsWith(marker))) { return; }
 
-		const sentence = document.getWordRangeAtPosition(position);
-		const message = dictionaries.includedIn(document.getText(sentence)).toMarkdown();
+		const message = dictionaries.includedIn(lineText).toMarkdown();
 
 		return new vscode.Hover(message);
 	}
