@@ -31,7 +31,7 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "prebuild": "npm run test",
-    "build": "vsce package",
+    "build": "vsce package -o vscode-dict.vsix",
     "lint": "eslint src --ext ts",
     "test": "mocha ./out/core/**/*.test.js"
   },
