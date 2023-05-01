@@ -3,24 +3,26 @@ import { DictionaryLoader } from './DictionaryLoader';
 import * as path from 'path';
 
 describe("DictionaryLoader", () => {
-  describe("loadFromYaml", () => {
-    it("returns a list of dictionaries", () => {
+  describe("load", () => {
+    it("returns a list of dictionaries", async () => {
       const notifier = { info: () => {}, warn: () => {}, error: () => {} };
       const loader = new DictionaryLoader(notifier);
-      const dictionaries = loader.loadFromYaml([path.join('fixtures', 'valid')]);
+      const setting = { location: "", source: [path.join('fixtures', 'valid')] };
+      const dictionaries = await loader.load([setting]);
 
-      assert.equal(dictionaries.dictionaries.length, 1);
-      assert.equal(dictionaries.dictionaries[0].name, "name");
-      assert.equal(dictionaries.dictionaries[0].aliases[0], "alias1");
-      assert.equal(dictionaries.dictionaries[0].aliases[1], "alias2");
-      assert.equal(dictionaries.dictionaries[0].description, "description");
+      assert.equal(dictionaries.length, 1);
+      assert.equal(dictionaries[0].name, "name");
+      assert.equal(dictionaries[0].alias[0], "alias1");
+      assert.equal(dictionaries[0].alias[1], "alias2");
+      assert.equal(dictionaries[0].descriptions[0], "description");
     });
 
-    it("returns an empty list if the yaml is invalid", () => {
+    it("returns an empty list if the yaml is invalid", async () => {
       const notifier = { info: () => {}, warn: () => {}, error: () => {} };
       const loader = new DictionaryLoader(notifier);
-      const dictionaries = loader.loadFromYaml([path.join('fixtures', 'invalid')]);
-      assert.equal(dictionaries.dictionaries.length, 0);
+      const setting = { location: "", source: [path.join('fixtures', 'invalid')] };
+      const dictionaries = await loader.load([setting]);
+      assert.equal(dictionaries.values.length, 0);
     });
   });
 });
