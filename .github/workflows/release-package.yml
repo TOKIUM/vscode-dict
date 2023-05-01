@@ -31,7 +31,10 @@ jobs:
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
+      - name: Install vsce
+        run: npm install -g vsce
       - run: npm ci
+      - run: npm run build
       - name: version push
         id: version
         run: |
@@ -42,7 +45,8 @@ jobs:
           git push origin --tags
           git push origin HEAD:main 
           echo "version=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
-      - run: npm run build
+      - name: publish vsce
+        run: vsce publish -p ${{ secrets.VSCE_TOKEN }}
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:

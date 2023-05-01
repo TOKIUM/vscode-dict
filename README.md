@@ -1,4 +1,4 @@
-# vscode-dict
+# @tokiumjp/vscode-dict
 ワークスペース直下のdict.ymlに記述された辞書情報をvscode上で閲覧できるようにする拡張機能です。
 `dict.yml`の書式は以下の通りです。
 
