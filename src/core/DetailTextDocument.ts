@@ -39,7 +39,7 @@ function linkedFeatureLines(features: dict.DictionaryFeature[]): string {
   return features.map(linkedFeatureLine).join('\n\n') + '\n\n';
 }
 
-export class DetailedTextDocument {
+export class DetailTextDocument {
   constructor(
     public readonly value: dict.Dictionary,
   ) {}

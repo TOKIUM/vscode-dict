@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { DictionaryStorage } from '../storage/DictionaryStorage';
-import { DetailedTextDocument } from '../../core/DetailTextDocument';
+import { DetailTextDocument } from '../../core/DetailTextDocument';
 
 export class DetailTextDocumentContentProvider implements vscode.TextDocumentContentProvider {
   constructor(
@@ -18,7 +18,7 @@ export class DetailTextDocumentContentProvider implements vscode.TextDocumentCon
     const found = this.storage.get(uri.path);
     if (found === undefined) { return 'Not found'; }
     
-    const doc = new DetailedTextDocument(found);
+    const doc = new DetailTextDocument(found);
     return doc.text;
   }
 }
