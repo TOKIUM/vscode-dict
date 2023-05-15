@@ -10,3 +10,6 @@
 
 ### 1.0.3
 - add @tokium/dict features
+
+### 1.0.4
+- fix release workflow(vscode market place)
