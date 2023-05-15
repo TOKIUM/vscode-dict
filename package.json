@@ -16,6 +16,9 @@
     "Other"
   ],
   "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:ruby"
+  ],
   "contributes": {
     "languages": [
       {
