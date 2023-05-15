@@ -64,7 +64,6 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "prebuild": "npm run test",
     "prepublish": "npm run build",
     "build": "vsce package -o vscode-dict.vsix",
     "publish": "vsce publish",
