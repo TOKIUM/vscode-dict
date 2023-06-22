@@ -13,3 +13,6 @@
 
 ### 1.0.4
 - fix release workflow(vscode market place)
+
+### 1.0.5
+- add @dict-group features

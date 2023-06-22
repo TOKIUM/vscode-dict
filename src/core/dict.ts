@@ -12,11 +12,12 @@ export function includedIn(sentence: string, dictionaries: dict.Dictionary[]): d
 
 export function toJson(dictionary: dict.Dictionary): string {
   const name = nameToJson(dictionary.name);
+  const group = dictionary.group ? groupToJson(dictionary.group) : undefined;
   const alias = dictionary.alias.map(aliasToJson);
   const descriptions = dictionary.descriptions.map(descriptionToJson);
   const features = dictionary.features.map(featureToJson);
 
-  return JSON.stringify({ name, alias, descriptions, features });
+  return JSON.stringify({ name, group, alias, descriptions, features });
 }
 
 function targetToJson(target: dict.DictionaryTarget): any {
@@ -25,6 +26,10 @@ function targetToJson(target: dict.DictionaryTarget): any {
 
 function nameToJson(name: dict.DictionaryName): any {
   return { target: targetToJson(name.target), value: name.value };
+}
+
+function groupToJson(group: dict.DictionaryGroup): any {
+  return { value: group.value };
 }
 
 function aliasToJson(alias: dict.DictionaryAlias): any {
@@ -50,11 +55,12 @@ function featureToJson(feature: dict.DictionaryFeature): any {
 export function fromJson(json: string): dict.Dictionary {
   const parsed = JSON.parse(json);
   const name = nameFromJson(parsed.name);
+  const group = parsed.group ? groupFromJson(parsed.group) : undefined;
   const alias = parsed.alias.map(aliasFromJson);
   const descriptions = parsed.descriptions.map(descriptionFromJson);
   const features = parsed.features.map(featureFromJson);
 
-  return new dict.Dictionary(name, alias, descriptions, features);
+  return new dict.Dictionary(name, group, alias, descriptions, features);
 }
 
 function targetFromJson(json: any): dict.DictionaryTarget {
@@ -63,6 +69,10 @@ function targetFromJson(json: any): dict.DictionaryTarget {
 
 function nameFromJson(json: any): dict.DictionaryName {
   return new dict.DictionaryName(targetFromJson(json.target), json.value);
+}
+
+function groupFromJson(json: any): dict.DictionaryGroup {
+  return new dict.DictionaryGroup(json.value);
 }
 
 function aliasFromJson(json: any): dict.DictionaryAlias {
